@@ -16,7 +16,7 @@ require "prism"
 require "yaml"
 
 module BetterspecsAudit
-  VERSION = "1.0.0"
+  VERSION = "1.0.1"
   SITE = "https://www.betterspecs.org"
 
   GUIDELINES = {
@@ -713,10 +713,12 @@ module BetterspecsAudit
       @findings << Finding.new(rule:, path: @relative, line:, message:)
     end
 
-    # `# betterspecs:disable rule-a, rule-b` (or `all`) on the reported line.
+    # `# betterspecs:disable rule-a, rule-b` (or `all`) on the reported line,
+    # also after another directive in the same comment
+    # (`# rubocop:disable RSpec/AnyInstance -- betterspecs:disable any-instance`).
     def suppressed?(rule, line)
       text = @lines[line - 1].to_s
-      match = text.match(/#\s*betterspecs:disable\s+([\w\-, ]+)/)
+      match = text.match(/#.*\bbetterspecs:disable\s+([\w\-, ]+)/)
       return false unless match
 
       ids = match[1].split(/[\s,]+/)

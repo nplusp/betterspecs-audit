@@ -111,6 +111,14 @@ class BetterspecsAuditTest < Minitest::Test
     end
   end
 
+  def test_disable_can_follow_another_directive
+    with_project(BAD) do |root|
+      file = File.join(root, "spec/models/user_spec.rb")
+      File.write(file, File.read(file).sub("# expect: any-instance", "# rubocop:disable RSpec/AnyInstance -- betterspecs:disable any-instance"))
+      refute_includes audit(root).findings.map(&:rule), "any-instance"
+    end
+  end
+
   def test_global_aggregate_failures_silences_multiple_expectations
     with_project(BAD) do |root|
       File.write(File.join(root, "spec/spec_helper.rb"), <<~RUBY)
