@@ -1,0 +1,13 @@
+{
+  "name": "betterspecs-audit",
+  "version": "1.0.0",
+  "description": "Audit an RSpec suite against betterspecs.org: a Prism-based parser for the mechanical rules plus a guided reading pass for the judgment calls, ending in a report of verified findings.",
+  "author": {
+    "name": "Mikita Pridorozhko",
+    "url": "https://github.com/nplusp"
+  },
+  "homepage": "https://github.com/nplusp/betterspecs-audit",
+  "repository": "https://github.com/nplusp/betterspecs-audit",
+  "license": "MIT",
+  "keywords": ["rspec", "ruby", "rails", "testing", "betterspecs", "code-review"]
+}

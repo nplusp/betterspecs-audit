@@ -1,0 +1,15 @@
+{
+  "name": "betterspecs-audit",
+  "description": "The betterspecs-audit skill for Claude Code: audit RSpec suites against betterspecs.org.",
+  "owner": {
+    "name": "Mikita Pridorozhko",
+    "url": "https://github.com/nplusp"
+  },
+  "plugins": [
+    {
+      "name": "betterspecs-audit",
+      "source": "./",
+      "description": "Audit an RSpec suite against betterspecs.org and write a report of verified findings."
+    }
+  ]
+}

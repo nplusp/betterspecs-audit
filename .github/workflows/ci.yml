@@ -1,0 +1,34 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby: ["3.3", "3.4", "4.0"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+      - run: ruby test/betterspecs_audit_test.rb
+      - name: CLI smoke test
+        run: |
+          ruby skills/betterspecs-audit/scripts/betterspecs_audit.rb --root test/fixtures/clean --fail-on info
+          ! ruby skills/betterspecs-audit/scripts/betterspecs_audit.rb --root test/fixtures/bad --fail-on error > /dev/null
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "4.0"
+      - run: gem install standard --no-document
+      - run: standardrb skills test/betterspecs_audit_test.rb
